@@ -1,7 +1,16 @@
 import Taro, { Component } from '@tarojs/taro'
+import { Provider } from '@tarojs/redux'
+import '@tarojs/async-await'
+import dva from './utils/dva'
 import Index from './pages/index'
-
+import models from './models'
 import './app.scss'
+
+const dvaApp = dva.createApp({
+  initialState: {},
+  models: models,
+})
+const store = dvaApp.getStore()
 
 // 如果需要在 h5 环境中开启 React Devtools
 // 取消以下注释：
@@ -10,7 +19,6 @@ import './app.scss'
 // }
 
 class App extends Component {
-
   config = {
     pages: [
       'pages/index/index',
@@ -42,7 +50,7 @@ class App extends Component {
     },
   }
 
-  componentDidMount () {}
+  async componentDidMount () {}
 
   componentDidShow () {}
 
@@ -54,7 +62,9 @@ class App extends Component {
   // 请勿修改此函数
   render () {
     return (
-      <Index />
+      <Provider store={store}>
+        <Index />
+      </Provider>
     )
   }
 }
