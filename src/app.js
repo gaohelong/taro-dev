@@ -23,7 +23,24 @@ class App extends Component {
     pages: [
       'pages/index/index',
       'pages/richtext/index',
-      'pages/user/index'
+      'pages/user/index',
+      'pages/login/index'
+    ],
+    "subpackages": [
+      {
+        "root": "pages/packageA/",
+        "name": "packA",
+        "pages": [
+          'pages/logs/index'
+        ]
+      },
+      {
+        "root": "pages/packageB/",
+        "name": "packB",
+        "pages": [
+          "pages/article/detail/index"
+        ]
+      }
     ],
     window: {
       backgroundTextStyle: 'light',
@@ -45,7 +62,11 @@ class App extends Component {
         {
           text: '用户',
           pagePath: 'pages/user/index',
-        }
+        },
+        {
+          text: '登陆',
+          pagePath: 'pages/login/index'
+        },
       ]
     },
   }

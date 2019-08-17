@@ -4,51 +4,31 @@ import { connect } from '@tarojs/redux'
 // import {  } from '../../components'
 import './index.scss'
 
-@connect(({ homeModel, globalModel }) => ({
-  ...homeModel,
+@connect(({ articleDetailModel, globalModel }) => ({
+  ...articleDetailModel,
   ...globalModel
 }))
 class Index extends Component {
   // 页面的配置只能设置 全局配置 中部分 window 配置项的内容，页面中配置项会覆盖 全局配置 的 window 中相同的配置项。
   config = {
-    navigationBarTitleText: '首页'
+    navigationBarTitleText: '文章详情'
   }
 
   constructor(props) {
     super(props)
     console.log(props)
     this.state = { // 当前组件state.
-      page: 1
+      detail_id: 1
     }
   }
 
-  componentWillMount () {
-    // console.log('首页-componentWillMount')
-    // Taro.hideTabBar()
-  }
+  componentWillMount () { }
 
   componentDidMount () { }
 
   componentWillUnmount () { }
 
-  componentDidShow () {
-    const { loginStatus } = this.props
-    console.log('index-componentDidShow', loginStatus)
-    if (!loginStatus) {
-      Taro.switchTab({
-        url: '/pages/login/index',
-        success: function(e) {
-          console.log('switchTab success')
-        },
-        fail: function(e) {
-          console.log('switchTab fail')
-        },
-        complete: function(e) {
-          console.log('switchTab complete')
-        },
-      })
-    }
-  }
+  componentDidShow () { }
 
   componentDidHide () { }
 
@@ -58,20 +38,23 @@ class Index extends Component {
   async getData(e) {
     console.log(e);
     await this.props.dispatch({
-      type: 'homeModel/getLists',
+      type: 'articleDetailModel/getLists',
       payload: {
-        page: 2
+        list: ['article', 'detail']
       }
     })
   }
 
   render () {
+    console.log('state', this.state);
+    console.log('props', this.props);
+
     const { page } = this.state
-    const { list } = this.props // props与homeModel中的state.
+    const { list } = this.props // props与articleDetailModel、globalModel中的state.
 
     return (
       <View className='index'>
-        <Text onClick={this.getData}>Click me</Text>
+        <Text onClick={this.getData}>getLists click me</Text>
         <View>
           { list.length ? list.map((v, k) => <Text key={k}>{v} - {k}</Text>) : '暂无数据' }
         </View>
