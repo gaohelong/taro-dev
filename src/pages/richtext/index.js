@@ -13,7 +13,21 @@ export default class Index extends Component {
     backgroundTextStyle: 'light'
   }
 
-  componentWillMount () { }
+  componentWillMount () {
+    // 隐藏tabBar某一项的右上角的红点
+    Taro.hideTabBarRedDot({
+      index: 1,
+      success: function(e) {
+        console.log('hideTabBarRedDot success')
+      },
+      fail: function(e) {
+        console.log('hideTabBarRedDot fail')
+      },
+      complete: function(e) {
+        console.log('hideTabBarRedDot complete')
+      },
+    })
+  }
 
   componentDidMount () {
     // 单行测试.

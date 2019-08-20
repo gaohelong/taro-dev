@@ -1,7 +1,7 @@
 // import { login } from '../services/server';
 
 export default {
-  namespace: 'loginModel',
+  namespace: 'homeModel',
   state: {
     list: []
   },

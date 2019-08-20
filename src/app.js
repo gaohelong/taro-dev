@@ -21,24 +21,28 @@ const store = dvaApp.getStore()
 class App extends Component {
   config = {
     pages: [
-      'pages/index/index',
-      'pages/richtext/index',
-      'pages/user/index',
-      'pages/login/index'
+      'pages/index/index',    // 登陆(打开小程序第一个执行的页面)
+      'pages/home/index',     // 首页
+      'pages/article/index',  // 文章
+      'pages/product/index',  // 产品
+      'pages/user/index',     // 我的
+      'pages/richtext/index', // 富文本
+      'pages/login/index'     // 登陆
     ],
     "subpackages": [
       {
         "root": "pages/packageA/",
         "name": "packA",
         "pages": [
-          'pages/logs/index'
+          'pages/logs/index', // 日志
+          'pages/logs/detail' // 日志列表
         ]
       },
       {
         "root": "pages/packageB/",
         "name": "packB",
         "pages": [
-          "pages/article/detail/index"
+          "pages/article/detail/index" // 文章详情
         ]
       }
     ],
@@ -53,19 +57,19 @@ class App extends Component {
       list: [
         {
           text: '首页',
-          pagePath: 'pages/index/index',
+          pagePath: 'pages/home/index',
         },
         {
-          text: '富文本',
-          pagePath: 'pages/richtext/index',
+          text: '文章',
+          pagePath: 'pages/article/index',
         },
         {
-          text: '用户',
+          text: '产品',
+          pagePath: 'pages/product/index',
+        },
+        {
+          text: '我的',
           pagePath: 'pages/user/index',
-        },
-        {
-          text: '登陆',
-          pagePath: 'pages/login/index'
         },
       ]
     },

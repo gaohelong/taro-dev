@@ -9,21 +9,7 @@ export default class Index extends Component {
     navigationBarTitleText: '用户'
   }
 
-  componentWillMount () {
-    // 移除tabBar某一项右上角的文本
-    Taro.removeTabBarBadge({
-      index: 2,
-      success: function(e) {
-        console.log('removeTabBarBadge success')
-      },
-      fail: function(e) {
-        console.log('removeTabBarBadge fail')
-      },
-      complete: function(e) {
-        console.log('removeTabBarBadge complete')
-      },
-    })
-  }
+  componentWillMount () { }
 
   componentDidMount () { }
 

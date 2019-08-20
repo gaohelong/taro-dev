@@ -1,7 +1,7 @@
 // import { login } from '../services/server';
 
 export default {
-  namespace: 'loginModel',
+  namespace: 'articleModel',
   state: {
     list: []
   },
@@ -10,19 +10,6 @@ export default {
     * getLists({ payload }, { select, call, put }) {
       console.log(payload)
       const { key, v } = yield select(state => state.homeModel)
-      // const { error, result } = yield call(indexApi.getLists, {
-      //   key,
-      //   v,
-      //   ...payload
-      // })
-      // if (!error) {
-      //   yield put({
-      //     type: 'updateState',
-      //     payload: {
-      //       data: result
-      //     }
-      //   })
-      // }
 
       yield put({
         type: 'updateList',

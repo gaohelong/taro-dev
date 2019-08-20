@@ -24,7 +24,38 @@ class Index extends Component {
 
   componentWillMount () {
     // console.log('登陆-componentWillMount')
+
+    // 显示tabbar
     // Taro.showTabBar()
+
+    // 显示tabBar某一项的右上角的红点
+    Taro.showTabBarRedDot({
+      index: 1,
+      success: function(e) {
+        console.log('showTabBarRedDot success')
+      },
+      fail: function(e) {
+        console.log('showTabBarRedDot fail')
+      },
+      complete: function(e) {
+        console.log('showTabBarRedDot complete')
+      },
+    })
+
+    // 为tabBar某一项的右上角添加文本
+    Taro.setTabBarBadge({
+      index: 2,
+      text: '99',
+      success: function(e) {
+        console.log('setTabBarBadge success')
+      },
+      fail: function(e) {
+        console.log('setTabBarBadge fail')
+      },
+      complete: function(e) {
+        console.log('setTabBarBadge complete')
+      },
+    })
   }
 
   componentDidMount () { }
