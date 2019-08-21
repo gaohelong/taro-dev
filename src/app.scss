@@ -11,3 +11,25 @@
 .at-modal__content {
   min-height: 80px;
 }
+
+page {
+  background-color: #eee;
+}
+
+/* 单行ellipsis */
+.one-ellipsis {
+  overflow: hidden;
+  text-overflow:ellipsis;
+  white-space: nowrap;
+}
+
+/* 多行ellipsis */
+.multi-ellipsis {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  word-break: break-all;
+  word-wrap: break-word;
+  white-space: pre-wrap;
+}

@@ -11,19 +11,31 @@ export default {
       console.log(payload)
 
       yield put({
-        type: 'updateList',
+        type: 'changeList',
         payload: {
           list: payload.list
         }
+      })
+    },
+    // 清除访问数据, 避免内存溢出
+    * clearData({ payload }, { select, call, put }) {
+      yield put({
+        type: 'changeClearData'
       })
     }
   },
   // reducers
   reducers: {
-    updateList(state, action) {
+    changeList(state, action) {
       return {
         ...state,
         list: action.payload.list
+      }
+    },
+    changeClearData(state, action) {
+      return {
+        ...state,
+        list: []
       }
     }
   }

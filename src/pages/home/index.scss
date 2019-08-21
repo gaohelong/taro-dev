@@ -1,4 +1,31 @@
-.homeSwiperImg {
-  width: 100%;
+.homeSwiper {
   height: 160PX;
+
+  .homeSwiperImg {
+    width: 100%;
+    height: 100%;
+    /*border-radius: 16PX;*/
+  }
+}
+
+.homeArticleList {
+  padding-top: 10PX;
+  padding-right: 16PX;
+  padding-bottom: 10PX;
+  padding-left: 16PX;
+  margin-top: 8PX;
+  background-color: #fff;
+  border-radius: 6PX;
+
+  .title {
+    line-height: 36PX;
+  }
+
+  .desc {
+    height: 48PX;
+    line-height: 24PX;
+    min-height: 48PX;
+    font-size: 14PX;
+    color: #8a8585;
+  }
 }

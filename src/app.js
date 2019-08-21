@@ -52,6 +52,7 @@ class App extends Component {
       navigationBarTitleText: 'Taro',
       navigationBarTextStyle: 'black',
       // enablePullDownRefresh: true, // 开启下拉刷新.
+      onReachBottomDistance: 60, // 页面上拉触底事件触发时距页面底部距离，单位为 px
     },
     tabBar: {
       list: [

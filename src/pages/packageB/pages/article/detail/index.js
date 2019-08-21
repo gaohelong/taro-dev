@@ -29,7 +29,14 @@ class Index extends Component {
 
   componentDidMount () { }
 
-  componentWillUnmount () { }
+  componentWillUnmount () {
+    console.log('article detail-componentWillUnmount')
+
+    // 清除访问数据, 避免内存溢出
+    this.props.dispatch({
+      type: 'articleDetailModel/clearData'
+    })
+  }
 
   componentDidShow () { }
 

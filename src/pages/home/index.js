@@ -16,7 +16,7 @@ class Index extends Component {
     navigationBarTitleText: '首页'
   }
 
-  constructor(props) {
+  constructor (props) {
     super(props)
     console.log(props)
     this.state = { // 当前组件state.
@@ -49,7 +49,7 @@ class Index extends Component {
     // loading
     Taro.showLoading({ title: 'loading' })
 
-    // fetch data
+    // 第一次访问fetch data
     await this.props.dispatch({
       type: 'homeModel/getSwiperList',
       payload: {
@@ -57,11 +57,14 @@ class Index extends Component {
       }
     })
 
+    await this.props.dispatch({
+      type: 'homeModel/getArticleList'
+    })
+
     // close loading
     setTimeout(() => {
       Taro.hideLoading()
     }, 1500)
-
   }
 
   componentDidMount () { }
@@ -72,18 +75,71 @@ class Index extends Component {
 
   componentDidHide () { }
 
+  // 上拉加载
+  async onReachBottom () {
+    const { articleListEnd } = this.props
+
+    if (articleListEnd) {
+      // modal消息提示框
+      // Taro.showModal({
+      //   title: '友情提示',
+      //   content: '暂无最新文章',
+      //   showCancel: false,
+      //   confirmText: '关闭'
+      // })
+
+      // 消息提示框
+      Taro.showToast({
+        title: '暂无最新文章',
+        icon: 'none',
+        duration: 2000
+      })
+
+      return
+    }
+
+    // loading
+    Taro.showLoading({ title: 'loading' })
+
+    setTimeout(async () => {
+      await this.props.dispatch({
+        type: 'homeModel/getArticleList'
+      })
+    }, 3000)
+
+    // close loading
+    setTimeout(() => {
+      Taro.hideLoading()
+    }, 1500)
+  }
+
+  // 监听用户点击页面内转发按钮
+  onShareAppMessage (res) {
+    if (res.from === 'button') {
+      // 来自页面内转发按钮
+      console.log(res.target)
+    }
+
+    return {
+      title: '首页',
+      path: '/page/home/index'
+    }
+  }
+
   render () {
     const { homePage } = this.state
-    const { swiperList } = this.props // props与homeModel、globalModel中的state.
+    const {
+      swiperList, articleList
+    } = this.props // props与homeModel、globalModel中的state.
 
     console.log('render-', this.state)
     console.log('render-', this.props)
 
     return (
       <View className='publicContainer'>
-        <View className='homeSwiper'>
+        <View className='homeSwiperWrap'>
           <Swiper
-            className='test-h'
+            className='homeSwiper'
             indicatorColor='#999'
             indicatorActiveColor='#fff'
             vertical={false}
@@ -104,6 +160,20 @@ class Index extends Component {
             }
           </Swiper>
         </View>
+        {
+          articleList.map(item => {
+            return (
+              <Navigator url={item.url} key={`homeArticleList${item.id}`}>
+                <View className='at-row'>
+                  <View className='at-col at-col-12 homeArticleList'>
+                    <View className='at-col at-col-12 title one-ellipsis'>{item.title}</View>
+                    <View className='at-col at-col-12 desc multi-ellipsis'>{item.desc}</View>
+                  </View>
+                </View>
+              </Navigator>
+            )
+          })
+        }
       </View>
     )
   }
