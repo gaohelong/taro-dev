@@ -22,16 +22,34 @@ class Index extends Component {
     }
   }
 
-  componentWillMount () { }
+  componentWillMount () {
+    // 登陆状态检测
+    const { loginStatus } = this.props
+    console.log('home-componentWillMount-loginStatus', loginStatus)
+    if (!loginStatus) {
+      Taro.redirectTo({
+        url: '/pages/index/index',
+        success: function(e) {
+          console.log('switchTab success')
+        },
+        fail: function(e) {
+          console.log('switchTab fail')
+        },
+        complete: function(e) {
+          console.log('switchTab complete')
+        },
+      })
+    }
+
+    // loading
+    Taro.showLoading({ title: 'loading' })
+  }
 
   componentDidMount () { }
 
   componentWillUnmount () { }
 
-  componentDidShow () {
-    const { loginStatus } = this.props
-    console.log('product-componentDidShow', loginStatus)
-  }
+  componentDidShow () { }
 
   componentDidHide () { }
 

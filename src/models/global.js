@@ -12,7 +12,7 @@ export default {
     * updateLoginStatus({ payload }, { put, select, call }) {
       yield put({
         type: 'changeLoginStatus',
-        payload: payload,
+        payload: payload.loginStatus,
       });
     }
   },

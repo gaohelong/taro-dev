@@ -1,43 +1,48 @@
-// import { login } from '../services/server';
+import { loginApi } from '../../services/server';
 
 export default {
   namespace: 'loginModel',
   state: {
-    list: []
+    loginList: []
   },
   // effects
   effects: {
-    * getLists({ payload }, { select, call, put }) {
+    * login({ payload }, { select, call, put }) {
       console.log(payload)
-      const { key, v } = yield select(state => state.homeModel)
-      // const { error, result } = yield call(indexApi.getLists, {
-      //   key,
-      //   v,
-      //   ...payload
-      // })
-      // if (!error) {
-      //   yield put({
-      //     type: 'updateState',
-      //     payload: {
-      //       data: result
-      //     }
-      //   })
-      // }
+      const { list } = yield select(state => state.loginModel)
+      const resp = yield call(loginApi, {
+        phone: payload.phone,
+        vCode: payload.vCode
+      })
+
+      console.log('loginApi resp', resp)
+      let loginCheck = false
+      if (resp.code === 200) {
+        loginCheck = true
+        yield put({
+          type: 'globalModel/updateLoginStatus',
+          payload: {
+            loginStatus: true
+          }
+        })
+      }
 
       yield put({
-        type: 'updateList',
+        type: 'changeList',
         payload: {
-          list: [1, 2, 3]
+          list: payload.list
         }
       })
+
+      return loginCheck
     }
   },
   // reducers
   reducers: {
-    updateList(state, action) {
+    changeList(state, action) {
       return {
         ...state,
-        list: action.payload.list
+        loginList: action.payload.list
       }
     }
   }

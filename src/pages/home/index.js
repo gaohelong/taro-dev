@@ -1,5 +1,7 @@
 import Taro, { Component } from '@tarojs/taro'
-import { View, Text } from '@tarojs/components'
+import {
+  Swiper, SwiperItem, View, Image, Navigator, Text
+} from '@tarojs/components'
 import { connect } from '@tarojs/redux'
 // import {  } from '../../components'
 import './index.scss'
@@ -18,48 +20,89 @@ class Index extends Component {
     super(props)
     console.log(props)
     this.state = { // 当前组件state.
-      page: 1
+      homePage: 1
     }
   }
 
-  componentWillMount () {
+  async componentWillMount () {
     // console.log('首页-componentWillMount')
     // Taro.hideTabBar()
+
+    // 登陆状态检测
+    const { loginStatus } = this.props
+    console.log('home-componentWillMount-loginStatus', loginStatus)
+    if (!loginStatus) {
+      Taro.redirectTo({
+        url: '/pages/index/index',
+        success: function(e) {
+          console.log('switchTab success')
+        },
+        fail: function(e) {
+          console.log('switchTab fail')
+        },
+        complete: function(e) {
+          console.log('switchTab complete')
+        },
+      })
+    }
+
+    // loading
+    Taro.showLoading({ title: 'loading' })
+
+    // fetch data
+    await this.props.dispatch({
+      type: 'homeModel/getSwiperList',
+      payload: {
+        list: ['home', 'list']
+      }
+    })
+
+    // close loading
+    setTimeout(() => {
+      Taro.hideLoading()
+    }, 1500)
+
   }
 
   componentDidMount () { }
 
   componentWillUnmount () { }
 
-  componentDidShow () {
-    const { loginStatus } = this.props
-    console.log('home-componentDidShow', loginStatus)
-  }
+  componentDidShow () { }
 
   componentDidHide () { }
 
-  /**
-   * 获取列表
-   */
-  async getData(e) {
-    console.log(e);
-    await this.props.dispatch({
-      type: 'homeModel/getLists',
-      payload: {
-        page: 2
-      }
-    })
-  }
-
   render () {
-    const { page } = this.state
-    const { list } = this.props // props与homeModel中的state.
+    const { homePage } = this.state
+    const { swiperList } = this.props // props与homeModel、globalModel中的state.
+
+    console.log('render-', this.state)
+    console.log('render-', this.props)
 
     return (
-      <View className='index'>
-        <Text onClick={this.getData}>Click me</Text>
-        <View>
-          { list.length ? list.map((v, k) => <Text key={k}>{v} - {k}</Text>) : '暂无数据' }
+      <View className='publicContainer'>
+        <View className='homeSwiper'>
+          <Swiper
+            className='test-h'
+            indicatorColor='#999'
+            indicatorActiveColor='#fff'
+            vertical={false}
+            circular
+            indicatorDots
+            autoplay
+          >
+            {
+              swiperList.map((item) => {
+                return (
+                  <Navigator url={item.url} key={`swiper${item.id}`}>
+                    <SwiperItem>
+                      <Image src={item.img} className='homeSwiperImg' />
+                    </SwiperItem>
+                  </Navigator>
+                )
+              })
+            }
+          </Swiper>
         </View>
       </View>
     )

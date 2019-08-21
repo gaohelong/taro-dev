@@ -23,11 +23,11 @@ class Index extends Component {
       loginPage: 1,
       phone: '',
       vCode: '',
-      vCode: {
+      vCodeInfo: {
         title: '获取验证码',
-        countdownTitle: '',
-        duration: 10,
-        current: 10,
+        countdownTitle: '重新获取(6s)',
+        duration: 6,
+        current: 6,
         ing: false
       },
       atModal: {
@@ -39,10 +39,7 @@ class Index extends Component {
     }
   }
 
-  componentWillMount () {
-    // console.log('首页-componentWillMount')
-    // Taro.hideTabBar()
-  }
+  componentWillMount () { }
 
   componentDidMount () { }
 
@@ -50,37 +47,10 @@ class Index extends Component {
 
   componentDidShow () {
     const { loginStatus } = this.props
-    console.log('index-componentDidShow', loginStatus)
-    if (loginStatus) {
-      Taro.switchTab({
-        url: '/pages/user/index',
-        success: function(e) {
-          console.log('switchTab success')
-        },
-        fail: function(e) {
-          console.log('switchTab fail')
-        },
-        complete: function(e) {
-          console.log('switchTab complete')
-        },
-      })
-    }
+    console.log('index-componentDidShow-loginStatus', loginStatus)
   }
 
   componentDidHide () { }
-
-  /**
-   * 获取列表
-   */
-  async getData(e) {
-    console.log(e);
-    await this.props.dispatch({
-      type: 'loginModel/getLists',
-      payload: {
-        page: 2
-      }
-    })
-  }
 
   /**
    * 手机号input
@@ -96,9 +66,9 @@ class Index extends Component {
   /**
    * 验证码input
    */
-  vcodeProc (value) {
+  vCodeProc (value) {
     this.setState({
-      vcode: value
+      vCode: value
     })
 
     return value
@@ -108,11 +78,11 @@ class Index extends Component {
    * 获取验证码
    */
   getVCode () {
-    const { vCode, phone } = this.state
+    const { vCodeInfo, phone } = this.state
     console.log(phone)
-    console.log(vCode.ing)
+    console.log(vCodeInfo.ing)
 
-    if (vCode.ing) {
+    if (vCodeInfo.ing) {
       return
     }
 
@@ -138,35 +108,35 @@ class Index extends Component {
     }
 
     this.setState(prevState => {
-      const vCode = prevState.vCode
-      vCode.ing = true
+      const vCodeInfo = prevState.vCodeInfo
+      vCodeInfo.ing = true
       return {
-        vCode: vCode
+        vCodeInfo: vCodeInfo
       }
     })
 
     let _clearInterval
     let _this = this
     _clearInterval = setInterval(() => {
-      if (_this.state.vCode.current === 1) {
+      if (_this.state.vCodeInfo.current === 1) {
         _this.setState(prevState => {
-          const vCode = prevState.vCode
-          vCode.current = vCode.duration
-          vCode.countdownTitle = ''
-          vCode.ing = false
+          const vCodeInfo = prevState.vCodeInfo
+          vCodeInfo.current = vCodeInfo.duration
+          vCodeInfo.countdownTitle = `重新获取(${vCodeInfo.current}s)`
+          vCodeInfo.ing = false
           return {
-            vCode: vCode
+            vCodeInfo: vCodeInfo
           }
         })
         return clearInterval(_clearInterval)
       }
 
       _this.setState(prevState => {
-        const vCode = prevState.vCode
-        vCode.current = --vCode.current
-        vCode.countdownTitle = `${vCode.current} s`
+        const vCodeInfo = prevState.vCodeInfo
+        vCodeInfo.current = --vCodeInfo.current
+        vCodeInfo.countdownTitle = `重新获取(${vCodeInfo.current}s)`
         return {
-          vCode: vCode
+          vCodeInfo: vCodeInfo
         }
       })
     }, 1000)
@@ -188,32 +158,51 @@ class Index extends Component {
   /**
    * 登陆
    */
-  loginProc (event) {
+  async loginProc (event) {
     console.log(event)
-
-    Taro.switchTab({
-      url: '/pages/home/index',
-      success: function(e) {
-        console.log('switchTab success')
-      },
-      fail: function(e) {
-        console.log('switchTab fail')
-      },
-      complete: function(e) {
-        console.log('switchTab complete')
-      },
+    const { phone, vCode } = this.state
+    const resp = await this.props.dispatch({
+      type: 'loginModel/login',
+      payload: {
+        phone: phone,
+        vCode: vCode,
+        list: ['login', 'list']
+      }
     })
-  }
 
-  onReset (event) {
-    console.log(event)
+    console.log(resp)
+
+    if (resp) {
+      Taro.switchTab({
+        url: '/pages/home/index',
+        success: function(e) {
+          console.log('switchTab success')
+        },
+        fail: function(e) {
+          console.log('switchTab fail')
+        },
+        complete: function(e) {
+          console.log('switchTab complete')
+        },
+      })
+    } else {
+      this.setState({
+        atModal: {
+          isOpened: true,
+          title: '友情提示',
+          cancelText: '关闭',
+          content: '手机号或验证码错误'
+        }
+      })
+    }
   }
 
   render () {
-    const { loginPage, vCode, atModal } = this.state
+    const { loginPage, vCodeInfo, atModal } = this.state
     const { list } = this.props // props与loginModel中的state.
 
-    console.log(this.state)
+    console.log('render-', this.state)
+    console.log('render-', this.props)
 
     return (
       <View className='loginForm'>
@@ -232,7 +221,7 @@ class Index extends Component {
             onChange={this.phoneProc.bind(this)}
           >
             <View className='loginGetVcode' onClick={this.getVCode}>
-              { !vCode.ing ? vCode.title : vCode.countdownTitle }
+              { !vCodeInfo.ing ? vCodeInfo.title : vCodeInfo.countdownTitle }
             </View>
           </AtInput>
           <AtInput
@@ -242,7 +231,7 @@ class Index extends Component {
             maxLength='4'
             placeholder='请输入'
             value={this.state.vcode}
-            onChange={this.vcodeProc.bind(this)}
+            onChange={this.vCodeProc.bind(this)}
           />
           <View className='loginBtn'>
             <AtButton formType='submit'>登陆</AtButton>

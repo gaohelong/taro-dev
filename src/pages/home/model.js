@@ -1,43 +1,50 @@
-// import { login } from '../services/server';
+import { homeSwiperListApi } from '../../services/server';
 
 export default {
   namespace: 'homeModel',
   state: {
-    list: []
+    homeList: [],
+    swiperList: []
   },
   // effects
   effects: {
-    * getLists({ payload }, { select, call, put }) {
+    * getSwiperList({ payload }, { select, call, put }) {
       console.log(payload)
       const { key, v } = yield select(state => state.homeModel)
-      // const { error, result } = yield call(indexApi.getLists, {
-      //   key,
-      //   v,
-      //   ...payload
-      // })
-      // if (!error) {
-      //   yield put({
-      //     type: 'updateState',
-      //     payload: {
-      //       data: result
-      //     }
-      //   })
-      // }
+      const resp = yield call(homeSwiperListApi, {
+        page: 1,
+        limit: 5
+      })
+
+      if (resp.code === 200) {
+        yield put({
+          type: 'changeSwiperList',
+          payload: {
+            swiperList: resp.list
+          }
+        })
+      }
 
       yield put({
-        type: 'updateList',
+        type: 'changeList',
         payload: {
-          list: [1, 2, 3]
+          list: payload.list
         }
       })
     }
   },
   // reducers
   reducers: {
-    updateList(state, action) {
+    changeList(state, action) {
       return {
         ...state,
-        list: action.payload.list
+        homeList: action.payload.list
+      }
+    },
+    changeSwiperList(state, action) {
+      return {
+        ...state,
+        swiperList: action.payload.swiperList
       }
     }
   }
