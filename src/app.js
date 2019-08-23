@@ -34,15 +34,16 @@ class App extends Component {
         "root": "pages/packageA/",
         "name": "packA",
         "pages": [
-          'pages/logs/index', // 日志
-          'pages/logs/detail' // 日志列表
+          'pages/logs/index',       // 日志
+          'pages/logs/detail',      // 日志列表
+          'pages/storage/index',    // 持久化
         ]
       },
       {
         "root": "pages/packageB/",
         "name": "packB",
         "pages": [
-          "pages/article/detail/index" // 文章详情
+          "pages/article/detail/index"    // 文章详情
         ]
       }
     ],

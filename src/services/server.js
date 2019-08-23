@@ -70,7 +70,7 @@ export const homeGetArticleListApi = (params) => {
         'id': 1,
         'title': '持久化-持久化持久化持久化持久化持久化持久化持久化持久化持久化持久化持久化持久化持久化',
         'desc': '持久化desc-持久化desc持久化desc持久化desc持久化desc持久化desc持久化desc持久化desc持久化desc持久化desc持久化desc持久化desc持久化desc持久化desc持久化desc持久化desc持久化desc持久化desc',
-        'url': '/pages/packageB/pages/article/detail/index?id=3'
+        'url': '/pages/packageA/pages/storage/index?id=1'
       },
       {
         'id': 2,
@@ -86,14 +86,14 @@ export const homeGetArticleListApi = (params) => {
       },
       {
         'id': 4,
-        'title': 'webview-webviewwebviewwebviewwebviewwebviewwebviewwebviewwebviewwebviewwebview',
-        'desc': 'webview desc-webview descwebview descwebview descwebview descwebview descwebview descwebview descwebview descwebview descwebview descwebview descwebview descwebview desc',
+        'title': '日历',
+        'desc': '日历 desc',
         'url': '/pages/packageB/pages/article/detail/index?id=3'
       },
       {
         'id': 5,
-        'title': '待定1',
-        'desc': '待定1 desc',
+        'title': 'webview-webviewwebviewwebviewwebviewwebviewwebviewwebviewwebviewwebviewwebview',
+        'desc': 'webview desc-webview descwebview descwebview descwebview descwebview descwebview descwebview descwebview descwebview descwebview descwebview descwebview descwebview desc',
         'url': '/pages/packageB/pages/article/detail/index?id=3'
       },
       {

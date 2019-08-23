@@ -1,0 +1,38 @@
+.detaiContainer {
+  padding-left: 20PX;
+  padding-right: 20PX;
+}
+
+page {
+  background-color: #fff;
+}
+
+.panel {
+  .title {
+    position: relative;
+    margin-left: -20PX;
+    padding-left: 20PX;
+    color: #6a6a77;
+    font-size: 16PX;
+    font-weight: 700;
+    line-height: 1.5;
+
+    &::before {
+      content: "";
+      display: inline-block;
+      position: absolute;
+      left: 10PX;
+      top: 50%;
+      margin-top: -.42667rem;
+      width: 2PX;
+      height: .85333rem;
+      background-color: #6190e8;
+      box-shadow: 0 0.14933rem 0.256rem 0 rgba(97,144,232,.2);
+      border-radius: 1PX;
+    }
+  }
+}
+
+.row-blank-interval-30 {
+  height: 30PX;
+}

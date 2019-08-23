@@ -234,7 +234,7 @@ class Index extends Component {
             onChange={this.vCodeProc.bind(this)}
           />
           <View className='loginBtn'>
-            <AtButton formType='submit'>登陆</AtButton>
+            <AtButton type="primary" size="normal" formType='submit'>登陆</AtButton>
           </View>
         </AtForm>
 
