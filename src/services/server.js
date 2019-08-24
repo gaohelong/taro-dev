@@ -82,13 +82,13 @@ export const homeGetArticleListApi = (params) => {
         'id': 3,
         'title': '富文本-富文本',
         'desc': '富文本详情-富文本详情富文本详情富文本详情富文本详情富文本详情富文本详情富文本详情富文本详情富文本详情富文本详情富文本详情富文本详情富文本详情富文本详情富文本详情富文本详情富文本详情富文本详情富文本详情富文本详情',
-        'url': '/pages/packageB/pages/article/detail/index?id=3'
+        'url': '/pages/richtext/index?id=5'
       },
       {
         'id': 4,
         'title': '日历',
         'desc': '日历 desc',
-        'url': '/pages/packageB/pages/article/detail/index?id=3'
+        'url': '/pages/packageB/pages/calendar/index?id=6'
       },
       {
         'id': 5,

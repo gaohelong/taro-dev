@@ -3,7 +3,7 @@
 export default {
   namespace: 'articleDetailModel',
   state: {
-    list: []
+    detail: {}
   },
   // effects
   effects: {
@@ -13,7 +13,10 @@ export default {
       yield put({
         type: 'changeList',
         payload: {
-          list: payload.list
+          detail: {
+            title: '文章标题',
+            desc: '8月22日，中国队主教练包壮（中）在比赛间隙布置战术。 当日，2019年第20届亚洲女排锦标赛八强战在韩国首尔蚕室综合运动场开赛。在复赛首轮比赛中，中国队以3比0战胜哈萨克斯坦队。 新华社发（李相浩摄）'
+          }
         }
       })
     },
@@ -29,13 +32,13 @@ export default {
     changeList(state, action) {
       return {
         ...state,
-        list: action.payload.list
+        detail: action.payload.detail
       }
     },
     changeClearData(state, action) {
       return {
         ...state,
-        list: []
+        detail: {}
       }
     }
   }

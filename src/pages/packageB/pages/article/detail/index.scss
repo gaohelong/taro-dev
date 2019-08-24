@@ -1,0 +1,16 @@
+.articleDetail {
+  margin-top: 30PX;
+
+  .title {
+    line-height: 40PX;
+    font-size: 18PX;
+    text-align: center;
+  }
+
+  .desc {
+    text-indent: 36PX;
+    word-break: break-all;
+    word-wrap: break-word;
+    white-space: pre-wrap;
+  }
+}

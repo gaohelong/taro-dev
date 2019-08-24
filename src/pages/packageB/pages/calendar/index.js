@@ -2,30 +2,48 @@ import Taro, { Component } from '@tarojs/taro'
 import { View, Text } from '@tarojs/components'
 import { connect } from '@tarojs/redux'
 // import {  } from '../../components'
-import { AtButton } from 'taro-ui'
+import { AtCalendar } from 'taro-ui'
 import './index.scss'
 
-@connect(({ articleDetailModel, globalModel }) => ({
-  ...articleDetailModel,
+@connect(({ calendarModel, globalModel }) => ({
+  ...calendarModel,
   ...globalModel
 }))
 class Index extends Component {
   // 页面的配置只能设置 全局配置 中部分 window 配置项的内容，页面中配置项会覆盖 全局配置 的 window 中相同的配置项。
   config = {
-    navigationBarTitleText: 'dva分包-文章详情'
+    navigationBarTitleText: '日历'
   }
 
   constructor(props) {
     super(props)
     console.log(props)
     this.state = { // 当前组件state.
-      detail_id: 1
+      calendarId: 1
     }
   }
 
   componentWillMount () {
     // 获取路由参数
     console.log('router-params', this.$router.params)
+
+    // 登陆状态检测
+    const { loginStatus } = this.props
+    console.log('packageB-calendar-componentWillMount-loginStatus', loginStatus)
+    if (!loginStatus) {
+      Taro.redirectTo({
+        url: '/pages/index/index',
+        success: function(e) {
+          console.log('switchTab success')
+        },
+        fail: function(e) {
+          console.log('switchTab fail')
+        },
+        complete: function(e) {
+          console.log('switchTab complete')
+        },
+      })
+    }
   }
 
   componentDidMount () { }
@@ -44,12 +62,16 @@ class Index extends Component {
   componentDidHide () { }
 
   /**
-   * 获取列表
+   * 点击日期
    */
-  async getData(e) {
-    console.log(e);
-    await this.props.dispatch({
-      type: 'articleDetailModel/getLists'
+  dayClick (event) {
+    console.log(event)
+
+    // 消息提示框
+    Taro.showToast({
+      title: `你点击的日期是: ${event.value}`,
+      icon: 'none',
+      duration: 2000
     })
   }
 
@@ -58,26 +80,15 @@ class Index extends Component {
     console.log('props', this.props);
 
     const { page } = this.state
-    const { detail } = this.props // props与articleDetailModel、globalModel中的state.
+    const { detail } = this.props // props与calendarModel、globalModel中的state.
 
     return (
-      <View className='detaiContainer'>
-        <View className='at-row mgn-t-20'>
+      <View className='detailContainer'>
+        <View className='at-row'>
           <View className='at-col at-col-12'>
-            <AtButton type='primary' size='normal' onClick={this.getData.bind(this)}>获取分包文章数据</AtButton>
+            <AtCalendar onDayClick={this.dayClick.bind(this)} />
           </View>
         </View>
-        { detail 
-          ? (
-              <View className='at-row'>
-                <View className='at-col at-col-12 articleDetail'>
-                  <View className='at-col at-col-12 title'>{detail.title}</View>
-                  <View className='at-col at-col-12 desc'>{detail.desc}</View>
-                </View>
-              </View>
-            )
-          : ''
-        }
       </View>
     )
   }

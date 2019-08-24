@@ -83,6 +83,7 @@ function calMoreImageInfo(e, idx, that, bindName) {
   }
   var temImages = temData.images;
   //因为无法获取view宽度 需要自定义padding进行计算，稍后处理
+  console.log(e);
   var recal = wxAutoImageCal(e.detail.width, e.detail.height,that,bindName); 
   // temImages[idx].width = recal.imageWidth;
   // temImages[idx].height = recal.imageheight; 
@@ -96,7 +97,7 @@ function calMoreImageInfo(e, idx, that, bindName) {
   var keyW = key + '.width'
   var keyH = key + '.height'
   that.setData({
-    [keyW]: recal.imageWidth,
+    [keyW]: recal.imageWidth - 22, // modify->margin-left、right
     [keyH]: recal.imageheight,
   })
 }
@@ -112,6 +113,7 @@ function wxAutoImageCal(originalWidth, originalHeight,that,bindName) {
   windowHeight = realWindowHeight;
   //判断按照那种方式进行缩放
   // console.log("windowWidth" + windowWidth);
+  console.log(originalWidth, originalHeight);
   if (originalWidth > windowWidth) {//在图片width大于手机屏幕width时候
     autoWidth = windowWidth;
     // console.log("autoWidth" + autoWidth);

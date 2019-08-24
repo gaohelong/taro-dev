@@ -1,7 +1,7 @@
 import Taro, { Component } from '@tarojs/taro'
 import { View, Text } from '@tarojs/components'
 import { connect } from '@tarojs/redux'
-import { AtInput, AtButton, AtTabBar } from 'taro-ui'
+import { AtInput, AtButton } from 'taro-ui'
 // import {  } from '../../components'
 import './index.scss'
 
@@ -11,7 +11,7 @@ import './index.scss'
 class Index extends Component {
   // 页面的配置只能设置 全局配置 中部分 window 配置项的内容，页面中配置项会覆盖 全局配置 的 window 中相同的配置项。
   config = {
-    navigationBarTitleText: '持久化'
+    navigationBarTitleText: '持久化-数据'
   }
 
   constructor(props) {
@@ -79,6 +79,17 @@ class Index extends Component {
     })
   }
 
+  clearStorage (event) {
+    Taro.clearStorageSync()
+
+    // 消息提示框
+    Taro.showToast({
+      title: '清理成功',
+      icon: 'none',
+      duration: 2000
+    })
+  }
+
   render () {
     console.log('state', this.state);
     console.log('props', this.props);
@@ -94,7 +105,7 @@ class Index extends Component {
           <View className='at-col at-col-12'>
             <AtInput
               name='storageKey'
-              title='设置key'
+              title='Key'
               type='text'
               placeholder='请输入key'
               value={this.state.storageKey}
@@ -106,7 +117,7 @@ class Index extends Component {
           <View className='at-col at-col-12'>
             <AtInput
               name='storageVal'
-              title='设置Val'
+              title='Val'
               type='text'
               placeholder='请输入val'
               value={this.state.storageVal}
@@ -128,7 +139,7 @@ class Index extends Component {
           <View className='at-col at-col-12'>
             <AtInput
               name='getStorageKey'
-              title='获取key'
+              title='Key'
               type='text'
               placeholder='请输入key'
               value={this.state.getStorageKey}
@@ -150,6 +161,16 @@ class Index extends Component {
         <View className='at-row' style="margin-top: 20PX;">
           <View className='at-col at-col-12'>
             <AtButton type='primary' size='normal' onClick={this.getStorage.bind(this)}>获取</AtButton>
+          </View>
+        </View>
+        <View className='row-blank-interval-30'>
+        </View>
+        <View className='at-row panel'>
+          <View className='at-col at-col-12 title'>清理本地持久化缓存</View>
+        </View>
+        <View className='at-row' style="margin-top: 20PX;">
+          <View className='at-col at-col-12'>
+            <AtButton type='primary' size='normal' onClick={this.clearStorage.bind(this)}>清理</AtButton>
           </View>
         </View>
       </View>

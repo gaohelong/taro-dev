@@ -43,7 +43,8 @@ class App extends Component {
         "root": "pages/packageB/",
         "name": "packB",
         "pages": [
-          "pages/article/detail/index"    // 文章详情
+          "pages/article/detail/index",    // 文章详情
+          "pages/calendar/index",    // 日历
         ]
       }
     ],
