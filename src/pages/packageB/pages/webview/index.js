@@ -1,25 +1,23 @@
 import Taro, { Component } from '@tarojs/taro'
-import { View, Text } from '@tarojs/components'
+import { View, Text, WebView } from '@tarojs/components'
 import { connect } from '@tarojs/redux'
 // import {  } from '../../components'
-import { AtCalendar } from 'taro-ui'
 import './index.scss'
 
-@connect(({ calendarModel, globalModel }) => ({
-  ...calendarModel,
+@connect(({ globalModel }) => ({
   ...globalModel
 }))
 class Index extends Component {
   // 页面的配置只能设置 全局配置 中部分 window 配置项的内容，页面中配置项会覆盖 全局配置 的 window 中相同的配置项。
   config = {
-    navigationBarTitleText: '日历'
+    navigationBarTitleText: 'Webview'
   }
 
   constructor(props) {
     super(props)
     console.log(props)
     this.state = { // 当前组件state.
-      calendarId: 1
+      webViewId: 1
     }
   }
 
@@ -48,20 +46,6 @@ class Index extends Component {
 
   componentDidHide () { }
 
-  /**
-   * 点击日期
-   */
-  dayClick (event) {
-    console.log(event)
-
-    // 消息提示框
-    Taro.showToast({
-      title: `你选择的日期是: ${event.value}`,
-      icon: 'none',
-      duration: 2000
-    })
-  }
-
   render () {
     console.log('state', this.state);
     console.log('props', this.props);
@@ -73,7 +57,7 @@ class Index extends Component {
       <View className='detailContainer'>
         <View className='at-row'>
           <View className='at-col at-col-12'>
-            <AtCalendar onDayClick={this.dayClick.bind(this)} />
+            <WebView src='https://weixin.qq' />
           </View>
         </View>
       </View>

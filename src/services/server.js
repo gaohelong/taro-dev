@@ -98,7 +98,7 @@ export const homeGetArticleListApi = (params) => {
         'id': 5,
         'title': 'webview-webviewwebviewwebviewwebviewwebviewwebviewwebviewwebviewwebviewwebview',
         'desc': 'webview desc-webview descwebview descwebview descwebview descwebview descwebview descwebview descwebview descwebview descwebview descwebview descwebview descwebview desc',
-        'url': '/pages/packageB/pages/article/detail/index?id=3',
+        'url': '/pages/packageB/pages/webview/index?id=10',
         'look': true
       },
       {
