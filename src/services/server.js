@@ -70,61 +70,71 @@ export const homeGetArticleListApi = (params) => {
         'id': 1,
         'title': '持久化-持久化持久化持久化持久化持久化持久化持久化持久化持久化持久化持久化持久化持久化',
         'desc': '持久化desc-持久化desc持久化desc持久化desc持久化desc持久化desc持久化desc持久化desc持久化desc持久化desc持久化desc持久化desc持久化desc持久化desc持久化desc持久化desc持久化desc持久化desc',
-        'url': '/pages/packageA/pages/storage/index?id=1'
+        'url': '/pages/packageA/pages/storage/index?id=1',
+        'look': true
       },
       {
         'id': 2,
         'title': '分包dva-分包dva分包dva分包dva分包dva分包dva分包dva分包dva分包dva分包dva分包dva分包dva',
         'desc': '分包dva desc-分包dva desc分包dva desc分包dva desc分包dva desc分包dva desc分包dva desc分包dva desc分包dva desc分包dva desc分包dva desc分包dva desc分包dva desc分包dva desc分包dva desc',
-        'url': '/pages/packageB/pages/article/detail/index?id=3'
+        'url': '/pages/packageB/pages/article/detail/index?id=3',
+        'look': true
       },
       {
         'id': 3,
         'title': '富文本-富文本',
         'desc': '富文本详情-富文本详情富文本详情富文本详情富文本详情富文本详情富文本详情富文本详情富文本详情富文本详情富文本详情富文本详情富文本详情富文本详情富文本详情富文本详情富文本详情富文本详情富文本详情富文本详情富文本详情',
-        'url': '/pages/richtext/index?id=5'
+        'url': '/pages/richtext/index?id=5',
+        'look': true
       },
       {
         'id': 4,
         'title': '日历',
         'desc': '日历 desc',
-        'url': '/pages/packageB/pages/calendar/index?id=6'
+        'url': '/pages/packageB/pages/calendar/index?id=6',
+        'look': true
       },
       {
         'id': 5,
         'title': 'webview-webviewwebviewwebviewwebviewwebviewwebviewwebviewwebviewwebviewwebview',
         'desc': 'webview desc-webview descwebview descwebview descwebview descwebview descwebview descwebview descwebview descwebview descwebview descwebview descwebview descwebview desc',
-        'url': '/pages/packageB/pages/article/detail/index?id=3'
+        'url': '/pages/packageB/pages/article/detail/index?id=3',
+        'look': true
       },
       {
         'id': 6,
         'title': '待定2',
         'desc': '待定2 desc',
-        'url': '/pages/packageB/pages/article/detail/index?id=3'
+        'url': '/pages/packageB/pages/article/detail/index?id=3',
+        'look': true
       },
       {
         'id': 7,
         'title': '待定3',
         'desc': '待定3 desc',
-        'url': '/pages/packageB/pages/article/detail/index?id=3'
+        'url': '/pages/packageB/pages/article/detail/index?id=3',
+        'look': true
       },
       {
         'id': 8,
         'title': '待定4',
         'desc': '待定4 desc',
-        'url': '/pages/packageB/pages/article/detail/index?id=3'
+        'url': '/pages/packageB/pages/article/detail/index?id=3',
+        'look': true
       },
       {
         'id': 9,
         'title': '待定5',
         'desc': '待定5 desc',
-        'url': '/pages/packageB/pages/article/detail/index?id=3'
+        'url': '/pages/packageB/pages/article/detail/index?id=3',
+        'look': true
       },
       {
         'id': 10,
         'title': '待定6',
         'desc': '待定6 desc',
-        'url': '/pages/packageB/pages/article/detail/index?id=3'
+        'url': '/pages/packageB/pages/article/detail/index?id=3',
+        'look': true
       },
     ]
   }

@@ -14,38 +14,11 @@ class Index extends Component {
     navigationBarTitleText: '用户'
   }
 
-  componentWillMount () {
-    // 移除tabBar某一项右上角的文本
-    Taro.removeTabBarBadge({
-      index: 2,
-      success: function(e) {
-        console.log('removeTabBarBadge success')
-      },
-      fail: function(e) {
-        console.log('removeTabBarBadge fail')
-      },
-      complete: function(e) {
-        console.log('removeTabBarBadge complete')
-      },
-    })
-
+  async componentWillMount () {
     // 登陆状态检测
-    const { loginStatus } = this.props
-    console.log('home-componentWillMount-loginStatus', loginStatus)
-    if (!loginStatus) {
-      Taro.redirectTo({
-        url: '/pages/index/index',
-        success: function(e) {
-          console.log('switchTab success')
-        },
-        fail: function(e) {
-          console.log('switchTab fail')
-        },
-        complete: function(e) {
-          console.log('switchTab complete')
-        },
-      })
-    }
+    await this.props.dispatch({
+      type: 'globalModel/loginCheck'
+    })
 
     // loading
     Taro.showLoading({ title: 'loading' })

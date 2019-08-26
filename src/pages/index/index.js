@@ -4,6 +4,7 @@ import { connect } from '@tarojs/redux'
 import { 
   AtForm, AtInput, AtButton, AtMessage, AtModal, AtModalHeader, AtModalContent, AtModalAction
 } from 'taro-ui'
+import { switchTab } from '../../utils/utils'
 import './index.scss'
 
 @connect(({ loginModel, globalModel }) => ({
@@ -173,18 +174,7 @@ class Index extends Component {
     console.log(resp)
 
     if (resp) {
-      Taro.switchTab({
-        url: '/pages/home/index',
-        success: function(e) {
-          console.log('switchTab success')
-        },
-        fail: function(e) {
-          console.log('switchTab fail')
-        },
-        complete: function(e) {
-          console.log('switchTab complete')
-        },
-      })
+      switchTab('/pages/home/index')
     } else {
       this.setState({
         atModal: {

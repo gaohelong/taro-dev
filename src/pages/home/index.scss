@@ -9,6 +9,7 @@
 }
 
 .homeArticleList {
+  position: relative;
   padding-top: 10PX;
   padding-right: 16PX;
   padding-bottom: 10PX;
@@ -28,4 +29,12 @@
     font-size: 14PX;
     color: #8a8585;
   }
+
+  .dot {
+    position: absolute;
+    font-size: 50PX;
+    color: red;
+    right: 0;
+    top: -42PX;
+  };
 }

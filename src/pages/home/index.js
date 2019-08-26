@@ -4,6 +4,7 @@ import {
 } from '@tarojs/components'
 import { connect } from '@tarojs/redux'
 // import {  } from '../../components'
+import { setTabBarBadge, showTabBarRedDot, navigateTo } from '../../utils/utils'
 import './index.scss'
 
 @connect(({ homeModel, globalModel }) => ({
@@ -29,22 +30,9 @@ class Index extends Component {
     // Taro.hideTabBar()
 
     // 登陆状态检测
-    const { loginStatus } = this.props
-    console.log('home-componentWillMount-loginStatus', loginStatus)
-    if (!loginStatus) {
-      Taro.redirectTo({
-        url: '/pages/index/index',
-        success: function(e) {
-          console.log('switchTab success')
-        },
-        fail: function(e) {
-          console.log('switchTab fail')
-        },
-        complete: function(e) {
-          console.log('switchTab complete')
-        },
-      })
-    }
+    await this.props.dispatch({
+      type: 'globalModel/loginCheck'
+    })
 
     // loading
     Taro.showLoading({ title: 'loading' })
@@ -60,6 +48,16 @@ class Index extends Component {
     await this.props.dispatch({
       type: 'homeModel/getArticleList'
     })
+
+    const { dotCnt } = this.props
+
+    // 显示tabBar某一项的右上角的红点
+    showTabBarRedDot(2)
+
+    // 为tabBar某一项的右上角添加文本
+    if (dotCnt) {
+      setTabBarBadge(0, dotCnt)
+    }
 
     // close loading
     setTimeout(() => {
@@ -105,6 +103,12 @@ class Index extends Component {
       await this.props.dispatch({
         type: 'homeModel/getArticleList'
       })
+
+      // 为tabBar某一项的右上角添加文本
+      const { dotCnt } = this.props
+      if (dotCnt) {
+        setTabBarBadge(0, dotCnt)
+      }
     }, 3000)
 
     // close loading
@@ -126,6 +130,30 @@ class Index extends Component {
     }
   }
 
+  /**
+   * 跳转到文章详情
+   */
+  async goToArticleDetail (item) {
+    console.log(item)
+    
+    // 清除空点
+    await this.props.dispatch({
+      type: 'homeModel/clearArticleDot',
+      payload: {
+        id: item.id
+      }
+    })
+
+    // 为tabBar某一项的右上角添加文本
+    const { dotCnt } = this.props
+    if (dotCnt) {
+      setTabBarBadge(0, dotCnt)
+    }
+
+    // 跳转
+    navigateTo(item.url)
+  }
+
   render () {
     const { homePage } = this.state
     const {
@@ -145,7 +173,7 @@ class Index extends Component {
             vertical={false}
             circular
             indicatorDots
-            autoplay
+            autoplay={false}
           >
             {
               swiperList.map((item) => {
@@ -163,14 +191,15 @@ class Index extends Component {
         {
           articleList.map(item => {
             return (
-              <Navigator url={item.url} key={`homeArticleList${item.id}`}>
-                <View className='at-row'>
-                  <View className='at-col at-col-12 homeArticleList'>
-                    <View className='at-col at-col-12 title one-ellipsis'>{item.title}</View>
-                    <View className='at-col at-col-12 desc multi-ellipsis'>{item.desc}</View>
-                  </View>
+              <View className='at-row' key={`homeArticleList${item.id}`} onClick={this.goToArticleDetail.bind(this, item)}>
+                <View className='at-col at-col-12 homeArticleList'>
+                  {
+                    item.look ? <View className='dot'>.</View> : ''
+                  }
+                  <View className='at-col at-col-12 title one-ellipsis'>{item.title}</View>
+                  <View className='at-col at-col-12 desc multi-ellipsis'>{item.desc}</View>
                 </View>
-              </Navigator>
+              </View>
             )
           })
         }

@@ -9,7 +9,8 @@ export default {
     swiperList: [],
     articleList: [],
     articleListPage: 1,
-    articleListEnd: false
+    articleListEnd: false,
+    dotCnt: 0
   },
   // effects
   effects: {
@@ -38,7 +39,7 @@ export default {
       })
     },
     * getArticleList({ payload }, { select, call, put }) {
-      const { articleList, articleListPage } = yield select(state => state.homeModel)
+      const { articleList, articleListPage, dotCnt } = yield select(state => state.homeModel)
       const resp = yield call(homeGetArticleListApi, {
         page: 1,
         limit: 5
@@ -58,15 +59,40 @@ export default {
           articleListEnd = true
         }
 
+        let _dotCnt = dotCnt + list.length
+
         yield put({
           type: 'changeArticleList',
           payload: {
             list: articleList.concat(list),
             articleListEnd: articleListEnd,
-            page
+            page,
+            dotCnt: _dotCnt
           }
         })
       }
+    },
+    * clearArticleDot({ payload }, { select, call, put }) {
+      const { articleList } = yield select(state => state.homeModel)
+
+      let dotCnt = 0
+      articleList.forEach((v) => {
+        if (payload.id === v.id) {
+          v.look = false
+        }
+
+        if (v.look) {
+          ++dotCnt
+        }
+      })
+
+      yield put({
+        type: 'changeArticleListDot',
+        payload: {
+          list: articleList,
+          dotCnt: dotCnt
+        }
+      })
     }
   },
   // reducers
@@ -88,7 +114,15 @@ export default {
         ...state,
         articleList: action.payload.list,
         articleListPage: action.payload.page,
-        articleListEnd: action.payload.articleListEnd
+        articleListEnd: action.payload.articleListEnd,
+        dotCnt: action.payload.dotCnt
+      }
+    },
+    changeArticleListDot(state, action) {
+      return {
+        ...state,
+        articleList: action.payload.list,
+        dotCnt: action.payload.dotCnt
       }
     }
   }

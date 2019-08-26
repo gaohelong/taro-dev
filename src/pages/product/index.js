@@ -2,6 +2,7 @@ import Taro, { Component } from '@tarojs/taro'
 import { View, Text } from '@tarojs/components'
 import { connect } from '@tarojs/redux'
 // import {  } from '../../components'
+import { removeTabBarBadge } from '../../utils/utils'
 import './index.scss'
 
 @connect(({ productModel, globalModel }) => ({
@@ -22,24 +23,14 @@ class Index extends Component {
     }
   }
 
-  componentWillMount () {
+  async componentWillMount () {
     // 登陆状态检测
-    const { loginStatus } = this.props
-    console.log('home-componentWillMount-loginStatus', loginStatus)
-    if (!loginStatus) {
-      Taro.redirectTo({
-        url: '/pages/index/index',
-        success: function(e) {
-          console.log('switchTab success')
-        },
-        fail: function(e) {
-          console.log('switchTab fail')
-        },
-        complete: function(e) {
-          console.log('switchTab complete')
-        },
-      })
-    }
+    await this.props.dispatch({
+      type: 'globalModel/loginCheck'
+    })
+
+    // 移除tabBar某一项右上角的文本
+    removeTabBarBadge(2)
 
     // loading
     Taro.showLoading({ title: 'loading' })

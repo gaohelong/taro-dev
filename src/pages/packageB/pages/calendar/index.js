@@ -69,7 +69,7 @@ class Index extends Component {
 
     // 消息提示框
     Taro.showToast({
-      title: `你点击的日期是: ${event.value}`,
+      title: `你选择的日期是: ${event.value}`,
       icon: 'none',
       duration: 2000
     })

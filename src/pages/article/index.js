@@ -11,7 +11,7 @@ import './index.scss'
 class Index extends Component {
   // 页面的配置只能设置 全局配置 中部分 window 配置项的内容，页面中配置项会覆盖 全局配置 的 window 中相同的配置项。
   config = {
-    navigationBarTitleText: '首页'
+    navigationBarTitleText: '文章'
   }
 
   constructor(props) {
@@ -22,24 +22,11 @@ class Index extends Component {
     }
   }
 
-  componentWillMount () {
+  async componentWillMount () {
     // 登陆状态检测
-    const { loginStatus } = this.props
-    console.log('home-componentWillMount-loginStatus', loginStatus)
-    if (!loginStatus) {
-      Taro.redirectTo({
-        url: '/pages/index/index',
-        success: function(e) {
-          console.log('switchTab success')
-        },
-        fail: function(e) {
-          console.log('switchTab fail')
-        },
-        complete: function(e) {
-          console.log('switchTab complete')
-        },
-      })
-    }
+    await this.props.dispatch({
+      type: 'globalModel/loginCheck'
+    })
 
     // loading
     Taro.showLoading({ title: 'loading' })
