@@ -21,7 +21,8 @@ class Index extends Component {
     super(props)
     console.log(props)
     this.state = { // 当前组件state.
-      homePage: 1
+      homePage: 1,
+      onPullDownRefreshStatus: false
     }
   }
 
@@ -115,6 +116,25 @@ class Index extends Component {
     setTimeout(() => {
       Taro.hideLoading()
     }, 1500)
+  }
+
+  /**
+   * 下拉刷新
+   */
+  async onPullDownRefresh () {
+    const { onPullDownRefreshStatus } = this.state
+    console.log('onPullDownRefresh', onPullDownRefreshStatus)
+    if (!onPullDownRefreshStatus) {
+      await this.setState({ onPullDownRefreshStatus: true })
+
+      Taro.startPullDownRefresh()
+
+      setTimeout(async () => {
+        Taro.stopPullDownRefresh()
+        await this.setState({ onPullDownRefreshStatus: false })
+      }, 3000)
+
+    }
   }
 
   // 监听用户点击页面内转发按钮
